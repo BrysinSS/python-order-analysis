@@ -1,0 +1,47 @@
+# 📦 Order Analysis in the Store
+from collections import defaultdict
+
+orders = [
+    {"id": 1, "customer": "Ivan", "amount": 1200, "status": "paid", "city": "Moscow"},
+    {"id": 2, "customer": "Olga", "amount": 850, "status": "pending", "city": "SPB"},
+    {"id": 3, "customer": "Ivan", "amount": 400, "status": "paid", "city": "Moscow"},
+    {"id": 4, "customer": "Anna", "amount": 1500, "status": "paid", "city": "Kazan"},
+    {"id": 5, "customer": "Olga", "amount": 600, "status": "paid", "city": "SPB"},
+    {"id": 6, "customer": "Pavel", "amount": 950, "status": "cancelled", "city": "Moscow"},
+    {"id": 7, "customer": "Anna", "amount": 1100, "status": "paid", "city": "Kazan"}
+]
+
+# 1. Total number of orders
+print(f"Total number of orders: {len(orders)}")
+
+# 2. Total sales amount
+total_sales = sum(order["amount"] for order in orders if order["status"] == "paid")
+print(f"Total amount of paid orders: {total_sales}")
+
+# 3. List of only paid orders
+paid_orders = [order for order in orders if order["status"] == "paid"]
+print("Paid orders:")
+for order in paid_orders:
+    print(order)
+
+# 4. Customer order frequency
+buyer_counts = defaultdict(int)
+for order in orders:
+    buyer_counts[order["customer"]] += 1
+
+print("\nOrder frequency by customer:")
+for buyer, count in buyer_counts.items():
+    print(f"{buyer}: {count} order(s)")
+
+# 5. Average order amount (for all orders)
+avg_check = sum(order["amount"] for order in orders) / len(orders)
+print(f"\nAverage check: {avg_check:.2f}")
+
+# 6. Sales amount by city (only paid orders)
+sales_by_city = defaultdict(int)
+for order in paid_orders:
+    sales_by_city[order["city"]] += order["amount"]
+
+print("\nSales amount by city:")
+for city, amount in sales_by_city.items():
+    print(f"{city}: {amount}")
